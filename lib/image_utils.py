@@ -105,7 +105,7 @@ def high_contrast_overlay(edges: np.ndarray, image: np.ndarray, threshold=50) ->
     return result
 
 
-def convert_to_terminal_art(image: np.ndarray, num_dots=4, scale: float | None = None) -> str:
+def convert_to_terminal_art(image: np.ndarray, num_dots=4, scale: float | None = None, invert_color=True) -> str:
     """Take an edge matrix and return art."""
     window_rows = num_dots
     window_cols = 2
@@ -133,7 +133,7 @@ def convert_to_terminal_art(image: np.ndarray, num_dots=4, scale: float | None =
     for r in range(0, img_height - window_rows + 1, window_rows):
         for c in range(0, img_width - window_cols + 1, window_cols):
             window = image[r:r + window_rows, c:c + window_cols]
-            c = get_dot(window)
+            c = get_dot(window, invert=invert_color)
             str_out.write(c)
         str_out.write("\n")
 

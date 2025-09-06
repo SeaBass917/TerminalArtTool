@@ -18,19 +18,26 @@ def generate_braille_binary_list():
             print(i + j)
 
 
-def get_dot(edge_window: np.ndarray) -> str:
+def get_dot(edge_window: np.ndarray, invert=False) -> str:
     """For a given window of edges (0|1's or 0|255's whatever),
     return the corresponding braille dots.
 
     Args:
         edge_window: Must be shape (4,2) or (3,2).
     """
+
+    def value(v: int, w: int) -> int:
+        if invert:
+            return w if 0 == v else 0
+
+        return w if 0 < v else 0
+
     if edge_window.shape == (4, 2):
         dots = dots4
 
         weights = [128, 64, 32, 16, 8, 4, 2, 1]
         flat = edge_window.flatten()
-        x = sum(w if 0 < v else 0 for w, v in zip(weights, flat))
+        x = sum(value(v, w) for w, v in zip(weights, flat))
 
     elif edge_window.shape == (3, 2):
         # dots = dots3
