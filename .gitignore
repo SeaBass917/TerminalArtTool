@@ -1,0 +1,8 @@
+/*
+
+!.gitignore
+!main.py
+!.vscode/
+!lib/
+
+lib/**/__pycache__
